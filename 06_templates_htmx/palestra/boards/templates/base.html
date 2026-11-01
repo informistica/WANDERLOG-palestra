@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Palestra Boards{% endblock %}</title>
+    
+    {# TODO: Aggiungi HTMX CDN #}
+    {# <script src="https://unpkg.com/htmx.org@1.9.10"></script> #}
+    
+    {# TODO: Aggiungi meta tag per CSRF con hx-headers #}
+    {# <meta name="htmx-config" content='{"globalViewTransitions":true}'> #}
+    
+    <style>
+        body { font-family: system-ui; margin: 2rem; }
+        .board-list { list-style: none; padding: 0; }
+        .board-item { padding: 1rem; margin: 0.5rem 0; border: 1px solid #ccc; }
+        .error { color: red; }
+        .form-control { display: block; width: 100%; padding: 0.5rem; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>{% trans "Bacheche" %}</h1>
+        {% if user.is_authenticated %}
+            <p>{% trans "Benvenuto" %}, {{ user.email }}</p>
+        {% endif %}
+    </nav>
+    
+    {# TODO: Aggiungi region aria-live per updates dinamici #}
+    {# <div aria-live="polite" aria-atomic="true" id="notifications"></div> #}
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    {# TODO: Script per configurare CSRF header per HTMX #}
+    {# <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        });
+    </script> #}
+</body>
+</html>
