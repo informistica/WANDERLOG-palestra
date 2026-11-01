@@ -1,15 +1,13 @@
 import os
 from pathlib import Path
+
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Leggi SECRET_KEY da variabile d'ambiente
+# Tutto ciò che cambia tra ambienti arriva dalle variabili d'ambiente (.env)
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key-change-me')
-
-# DEBUG da variabile d'ambiente
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
 INSTALLED_APPS = [
@@ -51,11 +49,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'palestra.wsgi.application'
 
-# Database - usa dj-database-url per leggere DATABASE_URL
+# DATABASE_URL viene letta da dj-database-url
 DATABASES = {
     'default': dj_database_url.config(
         default='postgres://user:password@db:5432/palestra_db',
-        conn_max_age=600
+        conn_max_age=600,
     )
 }
 

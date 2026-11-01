@@ -1,98 +1,81 @@
-# Livello 01: Ambiente Docker Compose + Postgres
+# Livello 01: ambiente con Docker Compose e Postgres
 
 ## Obiettivo
 
-Imparare a configurare un ambiente di sviluppo Django con Docker Compose e PostgreSQL, come in WANDERLOG.
+Configurare l'ambiente di sviluppo come in WANDERLOG: Django in un container, PostgreSQL 17 e Redis 7 come servizi del compose, le variabili in `.env`.
 
 ## Cosa si allena di WANDERLOG
 
-- Configurazione Docker Compose (§9 del piano di implementazione)
-- Variabili d'ambiente (§10)
-- Task 0.1 e 0.2 del piano
+- §9 del piano (compose: `env_file: .env`, healthcheck di `db`, `depends_on`)
+- §10 (variabili d'ambiente, `.env.example`)
+- Task 0.1 e 0.2 (ambiente, dipendenze e immagine)
 
 ## Prerequisiti
 
-- Docker e Docker Compose installati
-- Conoscenza base di Python e Django
-- Editor di testo
+- Docker Desktop (o Docker Engine con il plugin compose)
+- Python e Django di base
 
 ## Cosa c'è nello starter
 
-- `compose.yaml` parzialmente completo con TODO
 - `Dockerfile` con TODO
+- `compose.yaml` con TODO
 - `.env.example` da copiare in `.env`
-- `requirements.txt` di base
-- Struttura minimal Django in `palestra/`
-- Test che verificano l'ambiente
+- `requirements.txt` e `requirements-dev.txt`
+- un progetto Django minimo in `palestra/` (`settings.py` legge già le variabili d'ambiente)
+- i test in `palestra/tests/`
 
 ## Cosa devi fare
 
-### Passo 1: Copia le variabili d'ambiente
+### Passo 1: le variabili d'ambiente
 
 ```bash
 cp .env.example .env
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Genera una `DJANGO_SECRET_KEY` sicura e inseriscila in `.env`. Puoi usare:
+Metti la chiave generata in `DJANGO_SECRET_KEY` dentro `.env`. Il file `.env` non va mai committato (è già nel `.gitignore`).
 
-```bash
-python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-```
+### Passo 2: il Dockerfile
 
-### Passo 2: Completa il Dockerfile
+Completa i TODO:
+1. immagine base `python:3.12-slim`;
+2. copia `requirements.txt` e `requirements-dev.txt` e installa `requirements-dev.txt` con `pip` (prima del codice, così Docker riusa la cache quando cambi solo il codice);
+3. copia il resto del progetto con `COPY . .`.
 
-Apri `Dockerfile` e:
-1. Trova i TODO
-2. Installa le dipendenze Python (`requirements.txt`)
-3. Copia il codice del progetto nel container
+### Passo 3: compose.yaml
 
-### Passo 3: Completa compose.yaml
+Completa i TODO:
+1. il servizio `django` legge `.env` con `env_file`;
+2. `depends_on`: `db` con `condition: service_healthy`, `redis` con `condition: service_started`;
+3. il healthcheck di `db` con `pg_isready -U user -d palestra_db`.
 
-Apri `compose.yaml` e:
-1. Trova i TODO
-2. Configura il servizio Django per usare `.env`
-3. Configura il healthcheck di Postgres
-4. Aggiungi `depends_on` con condizione `service_healthy` per il database
-
-### Passo 4: Verifica con i test
-
-Costruisci e avvia i servizi:
+### Passo 4: verifica
 
 ```bash
 docker compose build
 docker compose up -d
-```
-
-Esegui i test:
-
-```bash
+docker compose ps
 docker compose run --rm django pytest
 ```
 
-## Cosa consegnare
+## I test
 
-- `.env` con una `DJANGO_SECRET_KEY` valida (NON committare questo file!)
-- `Dockerfile` completo
-- `compose.yaml` completo
-- Screenshot o output del comando `docker compose ps` che mostra i servizi in esecuzione
-- Output dei test passati
+| File | Cosa verifica | Tipo |
+|---|---|---|
+| `tests/test_docker_config.py` | i TODO del `Dockerfile` e di `compose.yaml` | **target dei TODO**: falliscono sullo starter |
+| `tests/test_environment.py` | `.env` presente, `DJANGO_SECRET_KEY` valida, connessione a Postgres e Redis, `manage.py check` | **test di controllo**: dipendono dal tuo `.env` e dai servizi avviati, non dal codice dei TODO. Se l'ambiente è a posto passano anche sullo starter |
 
 ## Criteri di successo
 
-✅ `docker compose build` completa senza errori
-✅ `docker compose up -d` avvia tutti i servizi
-✅ `docker compose ps` mostra `django`, `db`, e `redis` in stato `running`
-✅ Il database passa il healthcheck
-✅ `docker compose run --rm django pytest` esegue e passa tutti i test
-✅ `docker compose exec django python manage.py check` non mostra errori
+- `docker compose build` e `docker compose up -d` terminano senza errori
+- `docker compose ps` mostra `django`, `db` (healthy) e `redis` in esecuzione
+- `docker compose run --rm django pytest` passa tutti i test
 
 ## Suggerimenti
 
-- Il healthcheck di Postgres usa `pg_isready -U user -d palestra_db`
-- Il servizio Django deve attendere che il database sia healthy prima di partire
-- Se i container non partono, controlla i log con `docker compose logs`
-- Il file `.env` NON deve essere committato su git (è già in `.gitignore`)
+- Se un container non parte: `docker compose logs django`
+- Il servizio `django` parte solo quando `db` è healthy: se resta in attesa, controlla il healthcheck
 
 ## Prossimo livello
 
-Una volta completato questo livello, passa a `02_modelli/` dove creerai i modelli Django per Board e Place.
+`02_modelli/`: custom user, `Board` e `Place`.

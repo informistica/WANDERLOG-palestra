@@ -1,21 +1,23 @@
-# TODO: Specifica l'immagine base Python 3.12 slim
+# TODO: immagine base Python 3.12 slim
 # FROM ...
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Installa gettext per i18n
-RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
+# gettext serve per i18n (compilemessages)
+RUN apt-get update && apt-get install -y --no-install-recommends gettext && rm -rf /var/lib/apt/lists/*
 
-# TODO: Copia requirements.txt e installa le dipendenze Python
-# COPY requirements.txt .
-# RUN ...
+# TODO: copia requirements.txt e requirements-dev.txt e installa requirements-dev.txt con pip
+# COPY ...
+# RUN pip install ...
 
-# TODO: Copia tutto il codice del progetto
-# COPY . .
+# TODO: copia tutto il codice del progetto
+# COPY ...
 
 WORKDIR /app/palestra
 
-# Porta esposta per il server Django
 EXPOSE 8000
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
