@@ -1,4 +1,3 @@
-"""Configurazione dell'app places."""
 from django.apps import AppConfig
 
 

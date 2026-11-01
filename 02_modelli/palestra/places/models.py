@@ -24,3 +24,4 @@ class Place(BaseModel):
     class Meta:
         verbose_name = 'Luogo'
         verbose_name_plural = 'Luoghi'
+        ordering = ['created_at']

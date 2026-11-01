@@ -1,5 +1,6 @@
 """Test per verificare i modelli Django."""
 import pytest
+from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.contrib.auth import get_user_model
 from boards.models import Board
@@ -56,7 +57,7 @@ class TestUser:
         try:
             User._meta.get_field('username')
             pytest.fail("User non dovrebbe avere il campo username")
-        except models.FieldDoesNotExist:
+        except FieldDoesNotExist:
             pass  # Corretto!
     
     def test_create_user(self):

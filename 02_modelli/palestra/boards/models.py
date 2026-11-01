@@ -73,3 +73,4 @@ class Board(BaseModel):
     class Meta:
         verbose_name = 'Bacheca'
         verbose_name_plural = 'Bacheche'
+        ordering = ['-created_at']
