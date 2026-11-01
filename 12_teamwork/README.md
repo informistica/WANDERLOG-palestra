@@ -1,34 +1,54 @@
-# Livello 12: Lavoro a Coppie: Branch, PR, Review
+# Livello 12: Lavoro a Coppie con Git
 
 ## Obiettivo
 
-Praticare workflow git con branch, PR e revisione incrociata
+Praticare workflow git con branch, PR e revisione incrociata, come il team WANDERLOG.
 
 ## Cosa si allena di WANDERLOG
 
-§16, feat/*, PR, cross review
+- Workflow git (§16)
+- Branch feat/*
+- Pull Request
+- Code review
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 11 completato
+- Conoscenza git base
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Task per due persone
 
-## Test
+Una persona implementa `boards/export.py` (export board come JSON)
+Altra persona implementa `boards/import_data.py` (import da JSON)
 
-```bash
-docker compose run --rm django pytest
-```
+### Passo 1: Branch
+
+Ciascuno crea branch feat/export o feat/import
+
+### Passo 2: Implementazione
+
+Completa la propria parte
+
+### Passo 3: PR
+
+Apri PR per review
+
+### Passo 4: Review
+
+Revisiona la PR dell'altro, commenta
+
+### Passo 5: Merge
+
+Dopo approvazione, merge
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Branch creati correttamente
+- PR aperte
+- Review completate
+- Merge riuscito
+- Feature funzionanti insieme
 
-## Prossimo livello
-
-Passa al livello successivo una volta completato.
+Congratulazioni! Hai completato tutti i 12 livelli.

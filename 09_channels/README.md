@@ -1,23 +1,40 @@
-# Livello 09: Tempo Reale con Channels
+# Livello 09: Tempo Reale con Django Channels
 
 ## Obiettivo
 
-Implementare aggiornamenti real-time con Django Channels
+Implementare aggiornamenti real-time con Django Channels e WebSocket, come in WANDERLOG.
 
 ## Cosa si allena di WANDERLOG
 
-§9, Task 1A.5, WebSocket, ASGI
+- Channels (§9)
+- WebSocket
+- Task 1A.5
+- ASGI
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 08 completato
+- Conoscenza WebSocket base
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Installa Channels
 
-## Test
+Aggiungi channels, channels-redis, daphne a requirements
+
+### Passo 2: Configura ASGI
+
+Aggiorna asgi.py con ProtocolTypeRouter
+
+### Passo 3: Consumer
+
+Crea consumer per board updates
+
+### Passo 4: Routing
+
+Configura routing WebSocket
+
+### Passo 5: Test
 
 ```bash
 docker compose run --rm django pytest
@@ -25,10 +42,11 @@ docker compose run --rm django pytest
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- WebSocket si connette
+- Messaggi real-time funzionano
+- Consumer funziona
+- Test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `10_email/`.

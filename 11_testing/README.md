@@ -1,34 +1,49 @@
-# Livello 11: Test Completi e CI
+# Livello 11: Suite Test Completa con Coverage
 
 ## Obiettivo
 
-Implementare suite di test completa con coverage e CI
+Implementare suite test completa con pytest, factory_boy, coverage 80%, come WANDERLOG.
 
 ## Cosa si allena di WANDERLOG
 
-§11, Task 0.8, pytest, factory_boy, coverage 80%, GitHub Actions
+- pytest-django (§11)
+- factory_boy
+- coverage 80%
+- Task 0.8
+- GitHub Actions CI
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 10 completato
+- Conoscenza pytest
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Factory Boy
 
-## Test
+Crea factories per User, Board, Place
+
+### Passo 2: Coverage
+
+Configura coverage e raggiungi 80%
+
+### Passo 3: CI
+
+Verifica che CI passa
+
+### Passo 4: Test
 
 ```bash
-docker compose run --rm django pytest
+docker compose run --rm django pytest --cov
 ```
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Coverage >= 80%
+- Factory funzionano
+- CI passa
+- Tutti test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `12_teamwork/`.

@@ -2,22 +2,35 @@
 
 ## Obiettivo
 
-Implementare task asincroni con Celery e Redis
+Implementare task asincroni con Celery + Redis, come in WANDERLOG.
 
 ## Cosa si allena di WANDERLOG
 
-§8, Task 0.4, Celery + Redis
+- Celery + Redis (§8)
+- Task asincroni
+- Task 0.4
+- Beat per task periodici
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 07 completato
+- Conoscenza di task asincroni
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Configura Celery
 
-## Test
+Crea `palestra/celery.py` con configurazione base
+
+### Passo 2: Task di esempio
+
+Crea task che invia email di benvenuto
+
+### Passo 3: Worker in compose
+
+Aggiungi servizio celery-worker al compose.yaml
+
+### Passo 4: Test
 
 ```bash
 docker compose run --rm django pytest
@@ -25,10 +38,11 @@ docker compose run --rm django pytest
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Celery configurato
+- Task eseguono correttamente
+- Worker funziona
+- Test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `09_channels/`.

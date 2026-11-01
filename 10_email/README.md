@@ -1,23 +1,35 @@
-# Livello 10: Email in Entrata da Fixture
+# Livello 10: Email in Entrata da Fixture .eml
 
 ## Obiettivo
 
-Parsare email da fixture .eml come in WANDERLOG
+Parsare email da fixture .eml, come WANDERLOG fa con conferme di prenotazione.
 
 ## Cosa si allena di WANDERLOG
 
-§10, RES-03/04, parser .eml
+- Parser email (§10)
+- Fixture .eml (RES-03/04)
+- Task 1A.6
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 09 completato
+- Conoscenza email format
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Fixture .eml
 
-## Test
+Crea fixture email di esempio in tests/fixtures/
+
+### Passo 2: Parser
+
+Crea funzione che parsa .eml e estrae info
+
+### Passo 3: Test
+
+Test con fixture reali
+
+### Passo 4: Verifica
 
 ```bash
 docker compose run --rm django pytest
@@ -25,10 +37,10 @@ docker compose run --rm django pytest
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Parser estrae info correttamente
+- Fixture .eml valide
+- Test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `11_testing/`.

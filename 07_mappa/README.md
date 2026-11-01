@@ -1,23 +1,41 @@
-# Livello 07: Isola JavaScript: Mappa Leaflet
+# Livello 07: Isola JavaScript con Mappa Leaflet
 
 ## Obiettivo
 
-Creare un'isola JavaScript con Leaflet che legge GeoJSON
+Creare un'isola JavaScript con Leaflet per visualizzare luoghi su mappa, leggendo GeoJSON dall'API.
 
 ## Cosa si allena di WANDERLOG
 
-§2, Task 0.9, Leaflet + GeoJSON
+- Isola JavaScript (§2)
+- Leaflet + GeoJSON
+- Task 0.9
+- Unica isola JS nell'app
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 06 completato
+- JavaScript base
+- Familiarità con mappe
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Download Leaflet
 
-## Test
+Scarica leaflet.js e leaflet.css in `places/static/places/`
+
+### Passo 2: Template mappa
+
+Crea template con div per la mappa
+
+### Passo 3: Script JavaScript
+
+Crea script che carica places e li mostra su mappa Leaflet
+
+### Passo 4: Endpoint GeoJSON
+
+API che ritorna places come GeoJSON FeatureCollection
+
+### Passo 5: Test
 
 ```bash
 docker compose run --rm django pytest
@@ -25,10 +43,11 @@ docker compose run --rm django pytest
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Mappa Leaflet si carica
+- Places mostrati come marker
+- GeoJSON corretto
+- Test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `08_celery/`.
