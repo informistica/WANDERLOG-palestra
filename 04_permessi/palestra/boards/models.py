@@ -9,7 +9,6 @@ class UserManager(BaseUserManager):
     """Manager personalizzato per User senza username."""
     
     def create_user(self, email, password=None, **extra_fields):
-        """Crea e salva un utente normale."""
         if not email:
             raise ValueError('Email è obbligatoria')
         email = self.normalize_email(email)
@@ -19,14 +18,12 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        """Crea e salva un superuser."""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
-    """Utente personalizzato."""
     username = None
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True, verbose_name='Email')
@@ -40,7 +37,6 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    
     objects = UserManager()
 
     def __str__(self):
@@ -48,7 +44,6 @@ class User(AbstractUser):
 
 
 class Board(BaseModel):
-    """Bacheca di luoghi preferiti."""
     title = models.CharField(max_length=255, verbose_name='Titolo')
     description = models.TextField(blank=True, verbose_name='Descrizione')
     owner = models.ForeignKey(
@@ -67,16 +62,15 @@ class Board(BaseModel):
 
 
 class Collaborator(BaseModel):
-    """
-    TODO: Implementa il modello Collaborator per i collaboratori di una board.
-    
-    Campi necessari:
-    - board: FK a Board con related_name='collaborators'
-    - user: FK a User con related_name='collaborations'
-    - role: CharField con choices [('viewer', 'Visualizzatore')], default='viewer'
-    
-    Meta:
-    - unique_together su ('board', 'user')
-    """
-    # TODO: Aggiungi i campi qui
+    """TODO: Collaboratore di una board."""
+    # TODO: Aggiungi board FK a Board, related_name='collaborators'
+    # TODO: Aggiungi user FK a User, related_name='collaborations'
+    # TODO: Aggiungi role CharField con choices [('viewer', 'Visualizzatore')], default='viewer'
     pass
+    
+    # TODO: Aggiungi __str__ che ritorna f"{self.user.email} - {self.board.title}"
+    
+    class Meta:
+        # TODO: Aggiungi unique_together = ('board', 'user')
+        verbose_name = 'Collaboratore'
+        verbose_name_plural = 'Collaboratori'
