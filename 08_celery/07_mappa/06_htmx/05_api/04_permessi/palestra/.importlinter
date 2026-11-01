@@ -1,0 +1,11 @@
+[importlinter]
+root_package = .
+include_external_packages = True
+
+[importlinter:contract:layers]
+name = App dependency layers
+type = layers
+layers =
+    places
+    boards
+    core

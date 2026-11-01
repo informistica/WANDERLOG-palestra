@@ -1,23 +1,41 @@
-# Livello 06: Template e HTMX
+# Livello 06: Template Django + HTMX
 
 ## Obiettivo
 
-Implementare rendering parziale con HTMX per aggiornamenti dinamici
+Implementare template Django con HTMX per aggiornamenti dinamici, come in WANDERLOG (decisione D2).
 
 ## Cosa si allena di WANDERLOG
 
-§2, D2, template Django + HTMX, partial
+- Template Django + HTMX (§2, D2)
+- Partial rendering
+- Task 0.9
+- No React, no Node build
 
 ## Prerequisiti
 
-- Livello precedente completato
-- Conoscenza delle tecnologie di questo livello
+- Livello 05 completato
+- Conoscenza di template Django
+- HTML/CSS base
 
-## Istruzioni
+## Cosa devi fare
 
-Segui i TODO nel codice e completa l'implementazione.
+### Passo 1: Download HTMX
 
-## Test
+Scarica htmx.min.js in `core/static/core/` (versione 2.0.0)
+
+### Passo 2: Template base
+
+Crea `core/templates/base.html` con HTMX incluso
+
+### Passo 3: View boards
+
+Crea template e view per listare e creare boards con HTMX
+
+### Passo 4: Partial
+
+Crea partial che ritorna solo frammenti HTML
+
+### Passo 5: Test
 
 ```bash
 docker compose run --rm django pytest
@@ -25,10 +43,11 @@ docker compose run --rm django pytest
 
 ## Criteri di successo
 
-✅ Tutti i test passano
-✅ I TODO sono completati
-✅ Il codice segue le convenzioni WANDERLOG
+- Template base funziona
+- HTMX caricato correttamente
+- Partial rendering funziona
+- Test passano
 
 ## Prossimo livello
 
-Passa al livello successivo una volta completato.
+Passa a `07_mappa/`.
