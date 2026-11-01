@@ -1,0 +1,11 @@
+-r requirements.txt
+
+[tool.django]
+settings_module = "palestra.settings"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "palestra.settings"
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
