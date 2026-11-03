@@ -1,0 +1,7 @@
+<ul id="board-list">
+  {% for board in boards %}
+    <li><a href="{% url 'boards:detail' board.pk %}">{{ board.title }}</a> <small>{{ board.owner.email }}</small></li>
+  {% empty %}
+    <li>Nessuna bacheca, per ora.</li>
+  {% endfor %}
+</ul>
