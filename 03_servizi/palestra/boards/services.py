@@ -1,18 +1,14 @@
-"""Service layer per l'app boards."""
+"""Service layer dell'app boards: l'unico punto in cui si creano le bacheche."""
 from .models import Board
 
 
 def create_board(owner, title, description=""):
-    """
-    TODO: Implementa la creazione di una board.
-    
-    Args:
-        owner: L'utente proprietario della board
-        title: Il titolo della board
-        description: La descrizione (opzionale)
-    
+    """Crea una bacheca di `owner`. Solleva ValueError se il titolo è vuoto.
+
     Returns:
-        Board: La board creata
+        Board: la bacheca creata
     """
-    # TODO: Crea e ritorna una Board con i parametri forniti
-    pass
+    # TODO: togli gli spazi in testa e in coda a title
+    # TODO: se il titolo è vuoto solleva ValueError
+    # TODO: crea e restituisci la Board
+    raise NotImplementedError

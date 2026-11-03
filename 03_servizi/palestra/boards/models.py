@@ -30,27 +30,21 @@ class User(AbstractUser):
     Utente personalizzato che usa email al posto di username.
     Ha UUID come chiave primaria.
     """
-    # TODO: Rimuovi il campo username
-    # username = None
+    username = None
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True, verbose_name='Email')
+    name = models.CharField(max_length=255, blank=True, verbose_name='Nome')
+    language = models.CharField(
+        max_length=2,
+        choices=[('it', 'Italiano'), ('en', 'English')],
+        default='it',
+        verbose_name='Lingua'
+    )
     
-    # TODO: Aggiungi id come UUIDField primary key
-    # id = models.UUIDField(...)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     
-    # TODO: Rendi email unica e obbligatoria
-    # email = models.EmailField(unique=True, ...)
-    
-    # TODO: Aggiungi campo name per il nome completo
-    # name = models.CharField(...)
-    
-    # TODO: Aggiungi campo language con scelte 'it', 'en' e default 'it'
-    # language = models.CharField(max_length=2, choices=[('it', 'Italiano'), ('en', 'English')], default='it')
-    
-    # TODO: Imposta USERNAME_FIELD e REQUIRED_FIELDS
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = []
-    
-    # TODO: Usa il manager personalizzato
-    # objects = UserManager()
+    objects = UserManager()
 
     def __str__(self):
         return self.email
@@ -58,14 +52,14 @@ class User(AbstractUser):
 
 class Board(BaseModel):
     """Bacheca di luoghi preferiti."""
-    # TODO: Aggiungi campo title
-    # title = models.CharField(...)
-    
-    # TODO: Aggiungi campo description (opzionale, blank=True)
-    # description = models.TextField(...)
-    
-    # TODO: Aggiungi FK owner verso User con related_name='boards'
-    # owner = models.ForeignKey(...)
+    title = models.CharField(max_length=255, verbose_name='Titolo')
+    description = models.TextField(blank=True, verbose_name='Descrizione')
+    owner = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='boards',
+        verbose_name='Proprietario'
+    )
 
     def __str__(self):
         return self.title
@@ -73,3 +67,4 @@ class Board(BaseModel):
     class Meta:
         verbose_name = 'Bacheca'
         verbose_name_plural = 'Bacheche'
+        ordering = ['-created_at']

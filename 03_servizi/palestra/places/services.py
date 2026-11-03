@@ -1,24 +1,14 @@
-"""Service layer per l'app places."""
+"""Service layer dell'app places."""
 from .models import Place
 
 
 def add_place_to_board(board, name, lat, lng, description=""):
-    """
-    TODO: Implementa l'aggiunta di un luogo a una board.
-    
-    Args:
-        board: La board a cui aggiungere il luogo
-        name: Nome del luogo
-        lat: Latitudine
-        lng: Longitudine
-        description: Descrizione (opzionale)
-    
-    Returns:
-        Place: Il luogo creato
-        
+    """Aggiunge un luogo a una bacheca, validando bacheca e coordinate.
+
     Raises:
-        ValueError: Se board è None
+        ValueError: se board è None o le coordinate sono fuori intervallo
     """
-    # TODO: Valida che board non sia None (raise ValueError se lo è)
-    # TODO: Crea e ritorna un Place con i parametri forniti
-    pass
+    # TODO: se board è None solleva ValueError
+    # TODO: lat deve stare tra -90 e 90, lng tra -180 e 180 (altrimenti ValueError)
+    # TODO: crea e restituisci il Place
+    raise NotImplementedError

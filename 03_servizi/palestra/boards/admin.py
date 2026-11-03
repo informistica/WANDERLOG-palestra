@@ -4,13 +4,31 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Board
 
 
-# TODO: Personalizza UserAdmin per il modello User senza username
-# Suggerimento: list_display, fieldsets, add_fieldsets, ordering
-# class UserAdmin(BaseUserAdmin):
-#     ...
+@admin.register(User)
+class UserAdmin(BaseUserAdmin):
+    """Admin personalizzato per User senza username."""
+    list_display = ('email', 'name', 'language', 'is_staff')
+    list_filter = ('is_staff', 'is_superuser', 'language')
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Informazioni personali', {'fields': ('name', 'language')}),
+        ('Permessi', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Date importanti', {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name', 'password1', 'password2'),
+        }),
+    )
+    search_fields = ('email', 'name')
+    ordering = ('email',)
 
-# TODO: Registra User con UserAdmin personalizzato
-# admin.site.register(User, UserAdmin)
 
-# TODO: Registra Board con l'admin di default
-# admin.site.register(Board)
+@admin.register(Board)
+class BoardAdmin(admin.ModelAdmin):
+    """Admin per Board."""
+    list_display = ('title', 'owner', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('title', 'description', 'owner__email')
+    readonly_fields = ('id', 'created_at', 'updated_at')
