@@ -1,0 +1,8 @@
+-r requirements.txt
+pytest>=8
+pytest-django>=4.9
+PyYAML>=6.0
+import-linter>=2.0
+factory-boy>=3.3
+pytest-cov>=5.0
+# TODO (passo 3): aggiungi ruff e pre-commit

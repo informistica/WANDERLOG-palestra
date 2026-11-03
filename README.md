@@ -16,11 +16,10 @@ Questo repository contiene 12 livelli progressivi che introducono lo stack e le 
 - Channels per aggiornamenti real-time con frammenti HTML via estensione `ws` di HTMX
 - Email in entrata parsate da fixture `.eml` (Mailpit in dev)
 - pytest-django + factory_boy, copertura 80%
-- Test e2e con Playwright
-- CI con GitHub Actions
-- django-allauth per autenticazione
-- i18n it/en
+- CI con GitHub Actions, pre-commit e ruff
 - Lavoro di squadra con branch feat/*, PR e revisione incrociata
+
+Non sono coperti qui, e si affrontano direttamente in WANDERLOG: django-allauth per l'autenticazione (la palestra usa il login di Django), i18n it/en (c'è solo il campo `language` dell'utente) e i test e2e con Playwright (facoltativi nel livello 12, senza test automatico).
 
 ## Dominio mini: Bacheca dei Luoghi Preferiti
 
@@ -67,8 +66,8 @@ Ogni livello parte dallo stato completo del livello precedente, quindi i livelli
 | 08 | Task asincroni Celery + Redis | §8, Task 0.4 |
 | 09 | Tempo reale con Channels | §9, Task 0.6, 1A.5 |
 | 10 | Email in entrata da fixture .eml | §10, RES-03/04 |
-| 11 | Test completi: pytest, factory, coverage, CI | §11, Task 0.8 |
-| 12 | Lavoro a coppie: branch, PR, review | §16, git workflow |
+| 11 | Test completi: pytest, factory_boy, fixture, coverage 80% | §11, Task 0.8 |
+| 12 | Lavoro in squadra: branch feat/*, PR e review, pre-commit + ruff, CI GitHub Actions | §16, git workflow |
 
 ## Prerequisiti
 
@@ -99,7 +98,10 @@ Questo repository usa le stesse versioni di WANDERLOG:
 - `lint-imports`, dai livelli in cui il contratto è già nello starter
 - i **test di controllo** del livello (quelli dei livelli precedenti, elencati nel README del livello), che lo starter cumulativo deve già superare
 
-Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Un livello entra nella matrice della CI solo quando è pronto (oggi: 01-11).
+Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Tutti i 12 livelli sono nella matrice della CI.
+
+Il livello 12 contiene anche un workflow *dello studente* (`12_teamwork/.github/workflows/ci.yml`): GitHub non lo esegue dentro questo repository, perché legge solo `.github/workflows` nella root. Si prova copiando il livello in un repository proprio (vedi il README del livello).
+
 ## Supporto
 
 Per domande o problemi:

@@ -1,0 +1,16 @@
+# TODO (passo 4): completa la CI del tuo progetto.
+# Servono: trigger push/pull_request su main, servizi postgres:17 e redis:7,
+# le variabili d'ambiente (vedi .env.example), e gli step
+# checkout -> setup-python 3.12 -> pip install -> ruff -> lint-imports -> pytest
+# con soglia di coverage. Il file deve restare YAML valido.
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # TODO: gli altri step

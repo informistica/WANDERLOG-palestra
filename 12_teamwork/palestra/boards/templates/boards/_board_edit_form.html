@@ -1,0 +1,6 @@
+<form id="board-edit-form" method="post" action="{% url 'boards:edit' board.pk %}"
+      hx-post="{% url 'boards:edit' board.pk %}" hx-target="#board-header" hx-swap="outerHTML">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Salva</button>
+</form>
