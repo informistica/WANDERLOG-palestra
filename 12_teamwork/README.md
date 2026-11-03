@@ -101,6 +101,6 @@ Scrivi un test che apre la pagina di login con il fixture `live_server` di pytes
 - La soglia `--cov-fail-under=80` sta gia' in `pytest.ini` dal livello 11; ripeterla nel workflow la rende visibile a chi legge la CI.
 - Non mettere segreti veri nel workflow: per la CI basta una chiave finta. Quelli veri vanno in **Settings > Secrets and variables > Actions** e si leggono con `${{ secrets.NOME }}`.
 
-## Fine della palestra
+## Prossimo livello
 
-Hai finito i 12 livelli. Il prossimo passo e' WANDERLOG vero: le stesse regole, su un progetto tuo.
+Livello 13: account con django-allauth e interfaccia in italiano e inglese.

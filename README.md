@@ -4,7 +4,7 @@ Repository di esercizi per studenti di scuola superiore italiana che prepara, un
 
 ## Obiettivo
 
-Questo repository contiene 12 livelli progressivi che introducono lo stack e le convenzioni usate nel progetto reale WANDERLOG:
+Questo repository contiene 13 livelli progressivi che introducono lo stack e le convenzioni usate nel progetto reale WANDERLOG:
 - Django + Postgres in Docker Compose
 - Regole strette di import tra app (lint-imports)
 - Service layer
@@ -18,8 +18,9 @@ Questo repository contiene 12 livelli progressivi che introducono lo stack e le 
 - pytest-django + factory_boy, copertura 80%
 - CI con GitHub Actions, pre-commit e ruff
 - Lavoro di squadra con branch feat/*, PR e revisione incrociata
+- Account con django-allauth (login con email) e interfaccia in italiano e inglese
 
-Non sono coperti qui, e si affrontano direttamente in WANDERLOG: django-allauth per l'autenticazione (la palestra usa il login di Django), i18n it/en (c'è solo il campo `language` dell'utente) e i test e2e con Playwright (facoltativi nel livello 12, senza test automatico).
+Non e' coperto qui, e si affronta direttamente in WANDERLOG, il test e2e con Playwright (facoltativo nel livello 12, senza test automatico).
 
 ## Dominio mini: Bacheca dei Luoghi Preferiti
 
@@ -68,6 +69,7 @@ Ogni livello parte dallo stato completo del livello precedente, quindi i livelli
 | 10 | Email in entrata da fixture .eml | §10, RES-03/04 |
 | 11 | Test completi: pytest, factory_boy, fixture, coverage 80% | §11, Task 0.8 |
 | 12 | Lavoro in squadra: branch feat/*, PR e review, pre-commit + ruff, CI GitHub Actions | §16, git workflow |
+| 13 | Account con django-allauth, i18n it/en: template, gettext_lazy, .po/.mo, lingua dell'utente | auth (decisione #27), i18n |
 
 ## Prerequisiti
 
@@ -98,7 +100,7 @@ Questo repository usa le stesse versioni di WANDERLOG:
 - `lint-imports`, dai livelli in cui il contratto è già nello starter
 - i **test di controllo** del livello (quelli dei livelli precedenti, elencati nel README del livello), che lo starter cumulativo deve già superare
 
-Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Tutti i 12 livelli sono nella matrice della CI.
+Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Tutti i 13 livelli sono nella matrice della CI; per il 13 la CI installa anche gettext e compila il catalogo con `compilemessages`.
 
 Il livello 12 contiene anche un workflow *dello studente* (`12_teamwork/.github/workflows/ci.yml`): GitHub non lo esegue dentro questo repository, perché legge solo `.github/workflows` nella root. Si prova copiando il livello in un repository proprio (vedi il README del livello).
 

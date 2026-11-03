@@ -1,0 +1,12 @@
+# Ruff: linter (e, se vuoi, formatter) per tutto il progetto.
+line-length = 100
+target-version = "py312"
+extend-exclude = ["*/migrations/*", "*/static/*"]
+
+[lint]
+# le regole di default di ruff: errori di sintassi, pyflakes, le E piu' utili
+select = ["E4", "E7", "E9", "F"]
+
+[lint.per-file-ignores]
+# nei test una variabile `l` per una riga e' accettabile
+"palestra/tests/*" = ["E741"]

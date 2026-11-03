@@ -1,0 +1,13 @@
+[run]
+source =
+    boards
+    places
+    inbox
+    core
+omit =
+    */migrations/*
+    tests/*
+
+[report]
+show_missing = True
+skip_covered = True

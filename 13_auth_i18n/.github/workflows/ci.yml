@@ -1,0 +1,94 @@
+# CI del TUO progetto: copia la cartella .github nella root del tuo repo.
+# (GitHub esegue solo i workflow in <root del repo>/.github/workflows.)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: palestra_db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd "pg_isready -U user -d palestra_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 5432:5432
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 6379:6379
+
+    env:
+      DJANGO_SECRET_KEY: ci-only-secret-key-not-for-production-0123456789abcdef
+      DEBUG: 'True'
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      DATABASE_URL: postgres://user:password@localhost:5432/palestra_db
+      REDIS_URL: redis://localhost:6379/0
+      CELERY_BROKER_URL: redis://localhost:6379/0
+      CHANNEL_LAYER_URL: redis://localhost:6379/1
+      EMAIL_HOST: localhost
+      EMAIL_PORT: '1025'
+      DEFAULT_FROM_EMAIL: noreply@palestra.local
+      INBOUND_EMAIL_DOMAIN: palestra.local
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Create .env
+        run: |
+          cat > .env <<EOF
+          DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+          DEBUG=$DEBUG
+          ALLOWED_HOSTS=$ALLOWED_HOSTS
+          DATABASE_URL=$DATABASE_URL
+          REDIS_URL=$REDIS_URL
+          CELERY_BROKER_URL=$CELERY_BROKER_URL
+          CHANNEL_LAYER_URL=$CHANNEL_LAYER_URL
+          EMAIL_HOST=$EMAIL_HOST
+          EMAIL_PORT=$EMAIL_PORT
+          DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
+          INBOUND_EMAIL_DOMAIN=$INBOUND_EMAIL_DOMAIN
+          EOF
+
+      # TODO (passo 7): installa gettext e, in palestra/, compila le traduzioni prima di pytest
+
+      - name: Ruff
+        run: ruff check .
+
+      - name: Migrazioni allineate ai modelli
+        working-directory: palestra
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: lint-imports
+        working-directory: palestra
+        run: lint-imports
+
+      - name: pytest con soglia di coverage
+        working-directory: palestra
+        run: pytest --cov-fail-under=80

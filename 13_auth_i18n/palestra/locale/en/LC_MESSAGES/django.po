@@ -1,0 +1,169 @@
+# Traduzioni inglesi della palestra WANDERLOG (livello 13).
+# I msgid sono in italiano.
+msgid ""
+msgstr ""
+"Project-Id-Version: palestra WANDERLOG\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/templates/base.html
+msgid "Le mie bacheche"
+msgstr ""
+
+#: core/templates/base.html
+msgid "Esci"
+msgstr ""
+
+#: core/templates/base.html
+msgid "Accedi"
+msgstr ""
+
+#: core/templates/base.html
+msgid "Registrati"
+msgstr ""
+
+#: core/templates/base.html boards/models.py
+msgid "Lingua"
+msgstr ""
+
+#: core/templates/base.html
+msgid "Cambia lingua"
+msgstr ""
+
+#: core/templates/core/welcome.html
+msgid "Benvenuto"
+msgstr ""
+
+#: core/templates/core/welcome.html
+msgid "Benvenuto nella palestra WANDERLOG"
+msgstr ""
+
+#: core/templates/core/welcome.html
+msgid "Salva i tuoi luoghi preferiti in bacheche e condividile con chi viaggia con te."
+msgstr ""
+
+#: core/templates/core/welcome.html
+msgid "Entra con la tua email o crea un account."
+msgstr ""
+
+#: boards/templates/boards/_board_form.html
+msgid "Crea bacheca"
+msgstr ""
+
+#: boards/templates/boards/_board_edit_form.html
+msgid "Salva"
+msgstr ""
+
+#: boards/templates/boards/_board_list.html
+msgid "Nessuna bacheca, per ora."
+msgstr ""
+
+#: boards/templates/boards/_board_header.html
+#, python-format
+msgid "Proprietario: %(email)s"
+msgstr ""
+
+#: boards/templates/boards/board_detail.html places/models.py
+msgid "Luoghi"
+msgstr ""
+
+#: boards/templates/boards/board_detail.html
+msgid "Nessun luogo, per ora."
+msgstr ""
+
+#: boards/templates/boards/board_detail.html
+msgid "Vedi sulla mappa"
+msgstr ""
+
+#: boards/templates/boards/board_detail.html
+msgid "Torna alle bacheche"
+msgstr ""
+
+#: places/templates/places/board_map.html
+#, python-format
+msgid "Mappa: %(title)s"
+msgstr ""
+
+#: places/templates/places/board_map.html
+#, python-format
+msgid "Mappa dei luoghi di %(title)s"
+msgstr ""
+
+#: places/templates/places/board_map.html
+msgid "Nessun luogo da mostrare sulla mappa."
+msgstr ""
+
+#: places/templates/places/board_map.html
+msgid "Torna alla bacheca"
+msgstr ""
+
+#: boards/forms.py
+msgid "Per esempio: Weekend a Roma"
+msgstr ""
+
+#: boards/models.py
+msgid "Email"
+msgstr ""
+
+#: boards/models.py places/models.py
+msgid "Nome"
+msgstr ""
+
+#: boards/models.py
+msgid "Titolo"
+msgstr ""
+
+#: boards/models.py places/models.py
+msgid "Descrizione"
+msgstr ""
+
+#: boards/models.py
+msgid "Proprietario"
+msgstr ""
+
+#: boards/models.py places/models.py
+msgid "Bacheca"
+msgstr ""
+
+#: boards/models.py
+msgid "Bacheche"
+msgstr ""
+
+#: boards/models.py
+msgid "Lettore"
+msgstr ""
+
+#: boards/models.py
+msgid "Utente"
+msgstr ""
+
+#: boards/models.py
+msgid "Ruolo"
+msgstr ""
+
+#: boards/models.py
+msgid "Collaboratore"
+msgstr ""
+
+#: boards/models.py
+msgid "Collaboratori"
+msgstr ""
+
+#: places/models.py
+msgid "Latitudine"
+msgstr ""
+
+#: places/models.py
+msgid "Longitudine"
+msgstr ""
+
+#: places/models.py
+msgid "Indirizzo"
+msgstr ""
+
+#: places/models.py
+msgid "Luogo"
+msgstr ""

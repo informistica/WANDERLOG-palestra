@@ -1,0 +1,5 @@
+<section id="board-header">
+  <h1>{{ board.title }}</h1>
+  {% if board.description %}<p>{{ board.description }}</p>{% endif %}
+  <p>Proprietario: {{ board.owner.email }}</p>
+</section>

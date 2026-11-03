@@ -1,0 +1,3 @@
+{# Frammento per l'estensione ws di htmx: ogni elemento con hx-swap-oob si scambia da solo #}
+<ul hx-swap-oob="beforeend:#place-list"><li id="place-{{ place.id }}">{{ place.name }}</li></ul>
+<li id="place-empty" hx-swap-oob="delete"></li>

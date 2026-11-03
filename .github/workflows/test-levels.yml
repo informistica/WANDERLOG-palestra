@@ -4,6 +4,7 @@ name: Test Palestra Levels
 # per costruzione, quindi qui si eseguono solo i "test di controllo" (quelli
 # dei livelli precedenti, che lo starter cumulativo deve gia' superare) piu'
 # manage.py check, migrate e, dove c'e' gia' un contratto, lint-imports.
+# Dal livello 13 anche compilemessages (gettext) sul catalogo dello starter.
 # Qualsiasi errore fa fallire il job. Elenco test di controllo: README del livello.
 
 on:
@@ -58,6 +59,10 @@ jobs:
           - level: 12_teamwork
             control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py tests/test_celery_app.py tests/test_geocode_task.py tests/test_realtime.py tests/test_inbox.py tests/test_factories.py tests/test_fixtures.py tests/test_tooling.py tests/test_policy_matrix.py
             lint: true
+          - level: 13_auth_i18n
+            control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py tests/test_celery_app.py tests/test_geocode_task.py tests/test_realtime.py tests/test_inbox.py tests/test_factories.py tests/test_fixtures.py tests/test_tooling.py tests/test_policy_matrix.py tests/test_teamwork.py
+            lint: true
+            i18n: true
 
     services:
       postgres:
@@ -140,6 +145,13 @@ jobs:
         if: matrix.lint
         working-directory: ${{ matrix.level }}/palestra
         run: lint-imports
+
+      - name: Compila le traduzioni (gettext)
+        if: matrix.i18n
+        working-directory: ${{ matrix.level }}/palestra
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext
+          python manage.py compilemessages
 
       - name: Control tests (livelli precedenti)
         working-directory: ${{ matrix.level }}/palestra
