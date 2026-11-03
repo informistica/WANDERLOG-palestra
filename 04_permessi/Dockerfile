@@ -1,12 +1,18 @@
 FROM python:3.12-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
+# gettext serve per i18n (compilemessages)
+RUN apt-get update && apt-get install -y --no-install-recommends gettext && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Prima le dipendenze: Docker riusa questo layer finché i requirements non cambiano
+COPY requirements.txt requirements-dev.txt ./
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
+# Poi il codice
 COPY . .
 
 WORKDIR /app/palestra

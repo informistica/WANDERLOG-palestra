@@ -1,4 +1,3 @@
-"""Configurazione dell'app boards."""
 from django.apps import AppConfig
 
 

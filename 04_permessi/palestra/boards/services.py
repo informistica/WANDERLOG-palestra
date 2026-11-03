@@ -1,20 +1,20 @@
-"""Service layer per l'app boards."""
+"""Service layer dell'app boards: l'unico punto in cui si creano bacheche e collaborazioni."""
 from .models import Board, Collaborator
 from .policies import can_add_collaborator
 
 
 def create_board(owner, title, description=""):
-    board = Board.objects.create(
-        owner=owner,
-        title=title,
-        description=description
-    )
-    return board
+    """Crea una bacheca di `owner`. Solleva ValueError se il titolo è vuoto."""
+    title = (title or "").strip()
+    if not title:
+        raise ValueError("Il titolo della bacheca è obbligatorio")
+    return Board.objects.create(owner=owner, title=title, description=description or "")
 
 
-def add_collaborator(board, user, role='viewer', requesting_user=None):
-    """TODO: Aggiungi un collaborator a una board."""
-    # TODO: Se requesting_user è fornito, verifica con can_add_collaborator
-    # TODO: Se user è l'owner, raise ValueError("Il proprietario non può essere collaborator")
-    # TODO: Crea e ritorna Collaborator
-    pass
+def add_collaborator(board, user, role=Collaborator.ROLE_VIEWER, *, requesting_user):
+    """Condivide `board` con `user`. Solo il proprietario può farlo."""
+    # TODO: PermissionError se requesting_user non può aggiungere collaboratori (usa la policy)
+    # TODO: ValueError("Il proprietario non può essere ...") se user è il proprietario
+    # TODO: ValueError se user è già collaboratore
+    # TODO: crea e restituisci il Collaborator
+    raise NotImplementedError

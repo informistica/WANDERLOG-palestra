@@ -1,16 +1,15 @@
 import os
 from pathlib import Path
+
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Tutto ciò che cambia tra ambienti arriva dalle variabili d'ambiente (.env)
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key-change-me')
-
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
-# TODO: Aggiungi core, boards, places a INSTALLED_APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -18,7 +17,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # TODO: Aggiungi qui le nostre app
+    # app del progetto
+    'core',
+    'boards',
+    'places',
 ]
 
 MIDDLEWARE = [
@@ -51,14 +53,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'palestra.wsgi.application'
 
+# DATABASE_URL viene letta da dj-database-url
 DATABASES = {
     'default': dj_database_url.config(
         default='postgres://user:password@db:5432/palestra_db',
-        conn_max_age=600
+        conn_max_age=600,
     )
 }
 
-# TODO: Aggiungi AUTH_USER_MODEL = 'boards.User'
+# Custom user: va impostato prima della prima migrazione
+AUTH_USER_MODEL = 'boards.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

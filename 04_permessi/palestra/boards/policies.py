@@ -1,50 +1,24 @@
-"""Policy per il controllo accessi alle board."""
+"""Policy di accesso alle bacheche: funzioni pure, restituiscono True/False.
+
+Un utente anonimo (AnonymousUser o None) non può mai nulla:
+controlla user is not None e user.is_authenticated.
+"""
 
 
 def can_view_board(user, board):
-    """
-    TODO: Implementa il controllo se un utente può visualizzare una board.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True se l'utente è owner o collaborator
-    """
-    # TODO: Ritorna True se:
-    # - user è il proprietario (board.owner == user)
-    # - oppure user è un collaborator (esiste un Collaborator con board=board e user=user)
-    # Usa board.collaborators.filter(user=user).exists() per il secondo check
-    pass
+    """True se user è il proprietario o un collaboratore della bacheca."""
+    # TODO: proprietario (board.owner_id == user.pk)
+    # TODO: oppure collaboratore: board.collaborators.filter(user=user).exists()
+    raise NotImplementedError
 
 
 def can_edit_board(user, board):
-    """
-    TODO: Implementa il controllo se un utente può modificare una board.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True solo se l'utente è owner
-    """
-    # TODO: Ritorna True solo se user è il proprietario
-    pass
+    """True solo per il proprietario."""
+    # TODO
+    raise NotImplementedError
 
 
 def can_add_collaborator(user, board):
-    """
-    TODO: Implementa il controllo se un utente può aggiungere collaboratori.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True solo se l'utente è owner
-    """
-    # TODO: Ritorna True solo se user è il proprietario
-    # (stessa logica di can_edit_board)
-    pass
+    """True solo per il proprietario."""
+    # TODO
+    raise NotImplementedError

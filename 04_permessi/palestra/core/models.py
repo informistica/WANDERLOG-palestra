@@ -8,14 +8,9 @@ class BaseModel(models.Model):
     Modello astratto base per tutti i modelli del progetto.
     Fornisce un ID UUID e timestamp di creazione/modifica.
     """
-    # TODO: Aggiungi campo id come UUIDField con primary_key=True
-    # id = models.UUIDField(...)
-    
-    # TODO: Aggiungi created_at con auto_now_add=True
-    # created_at = models.DateTimeField(...)
-    
-    # TODO: Aggiungi updated_at con auto_now=True  
-    # updated_at = models.DateTimeField(...)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True

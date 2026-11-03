@@ -3,5 +3,10 @@ from django.contrib import admin
 from .models import Place
 
 
-# TODO: Registra Place con l'admin di default
-# admin.site.register(Place)
+@admin.register(Place)
+class PlaceAdmin(admin.ModelAdmin):
+    """Admin per Place."""
+    list_display = ('name', 'board', 'lat', 'lng', 'created_at')
+    list_filter = ('created_at', 'board')
+    search_fields = ('name', 'description', 'board__title')
+    readonly_fields = ('id', 'created_at', 'updated_at')

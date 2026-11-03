@@ -1,4 +1,1 @@
-"""Admin per l'app core."""
-from django.contrib import admin
-
-# Non ci sono modelli concreti in core da registrare
+"""Admin per l'app core: non ci sono modelli concreti da registrare."""

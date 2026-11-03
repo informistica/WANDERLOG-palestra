@@ -9,6 +9,7 @@ class UserManager(BaseUserManager):
     """Manager personalizzato per User senza username."""
     
     def create_user(self, email, password=None, **extra_fields):
+        """Crea e salva un utente normale."""
         if not email:
             raise ValueError('Email è obbligatoria')
         email = self.normalize_email(email)
@@ -18,12 +19,17 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """Crea e salva un superuser."""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
+    """
+    Utente personalizzato che usa email al posto di username.
+    Ha UUID come chiave primaria.
+    """
     username = None
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True, verbose_name='Email')
@@ -37,6 +43,7 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    
     objects = UserManager()
 
     def __str__(self):
@@ -44,6 +51,7 @@ class User(AbstractUser):
 
 
 class Board(BaseModel):
+    """Bacheca di luoghi preferiti."""
     title = models.CharField(max_length=255, verbose_name='Titolo')
     description = models.TextField(blank=True, verbose_name='Descrizione')
     owner = models.ForeignKey(
@@ -59,18 +67,28 @@ class Board(BaseModel):
     class Meta:
         verbose_name = 'Bacheca'
         verbose_name_plural = 'Bacheche'
+        ordering = ['-created_at']
 
 
 class Collaborator(BaseModel):
-    """TODO: Collaboratore di una board."""
-    # TODO: Aggiungi board FK a Board, related_name='collaborators'
-    # TODO: Aggiungi user FK a User, related_name='collaborations'
-    # TODO: Aggiungi role CharField con choices [('viewer', 'Visualizzatore')], default='viewer'
-    pass
-    
-    # TODO: Aggiungi __str__ che ritorna f"{self.user.email} - {self.board.title}"
-    
+    """Utente con cui il proprietario condivide una bacheca."""
+    ROLE_VIEWER = 'viewer'
+    ROLE_CHOICES = [(ROLE_VIEWER, 'Lettore')]
+
+    # TODO: FK board verso Board, on_delete CASCADE, related_name='collaborators'
+    # board = models.ForeignKey(...)
+
+    # TODO: FK user verso 'User', on_delete CASCADE, related_name='collaborations'
+    # user = models.ForeignKey(...)
+
+    # TODO: role, CharField con choices=ROLE_CHOICES e default ROLE_VIEWER
+    # role = models.CharField(...)
+
+    def __str__(self):
+        return f'{self.user} su {self.board}'
+
     class Meta:
-        # TODO: Aggiungi unique_together = ('board', 'user')
         verbose_name = 'Collaboratore'
         verbose_name_plural = 'Collaboratori'
+        # TODO: lo stesso utente non può comparire due volte sulla stessa bacheca
+        # unique_together = [...]
