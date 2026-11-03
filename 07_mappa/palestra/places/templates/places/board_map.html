@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mappa: {{ board.title }}{% endblock %}
+{% block head %}
+  {# TODO (passo 4): il CSS di Leaflet, solo in questa pagina #}
+{% endblock %}
+{% block content %}
+  <h1>Mappa: {{ board.title }}</h1>
+  {# TODO (passo 4): <div id="board-map"> con data-geojson-url, un'etichetta accessibile e un'altezza #}
+  {# TODO (passo 4): <p id="mappa-vuota">, nascosto (attributo hidden) se la bacheca ha luoghi #}
+  <p><a href="{% url 'boards:detail' board.pk %}">Torna alla bacheca</a></p>
+{% endblock %}
+{% block scripts %}
+  {# TODO (passo 4): prima Leaflet, poi l'isola places/map.js, entrambi con defer #}
+{% endblock %}
