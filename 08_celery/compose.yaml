@@ -1,0 +1,40 @@
+services:
+  django:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    working_dir: /app/palestra
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: python manage.py runserver 0.0.0.0:8000
+
+  # TODO (passo 5): servizio celery-worker, come django (build, volumes, working_dir,
+  #   env_file, depends_on db e redis) ma senza ports e con il comando
+  #   celery -A palestra worker -l info
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: palestra_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d palestra_db"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
