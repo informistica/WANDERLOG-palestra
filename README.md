@@ -91,10 +91,15 @@ Questo repository usa le stesse versioni di WANDERLOG:
 
 ## Workflow di verifica
 
-Ogni livello include test che verificano automaticamente il completamento. Il workflow GitHub Actions esegue i test di tutti i livelli in parallelo, così l'insegnante può vedere quali livelli sono stati completati da ogni studente.
+**In locale (studenti):** `docker compose run --rm django pytest` nella cartella del livello. Il livello è completo quando passano **tutti** i test.
 
-È normale che i livelli non ancora completati falliscano - il workflow è progettato per mostrare i progressi, non per bloccare.
+**In CI (GitHub Actions, `.github/workflows/test-levels.yml`):** il repository contiene il codice *starter*, dove i test dei TODO falliscono per costruzione. Per questo la CI, per ogni livello pronto, esegue con Postgres 17 e Redis 7 reali:
 
+- `python manage.py check` e `python manage.py migrate`
+- `lint-imports`, dai livelli in cui il contratto è già nello starter
+- i **test di controllo** del livello (quelli dei livelli precedenti, elencati nel README del livello), che lo starter cumulativo deve già superare
+
+Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Un livello entra nella matrice della CI solo quando è pronto (oggi: 01, 02, 03).
 ## Supporto
 
 Per domande o problemi:
