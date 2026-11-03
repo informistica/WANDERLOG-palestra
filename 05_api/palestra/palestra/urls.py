@@ -1,17 +1,12 @@
-"""URL configuration."""
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
-from boards.views import BoardViewSet
-from places.views import PlaceViewSet
+from django.urls import path
 
-# TODO: Crea router DRF
-router = routers.DefaultRouter()
-# TODO: Registra BoardViewSet con basename='board'
-# TODO: Registra PlaceViewSet con basename='place'
+# TODO (passo 7): crea un DefaultRouter di DRF e registra
+#   - BoardViewSet (boards/views.py) sul prefisso 'boards', basename 'board'
+#   - BoardPlaceViewSet (places/views.py) sul prefisso annidato
+#     r'boards/(?P<board_pk>[^/.]+)/places', basename 'board-place'
+#   poi includi le sue URL sotto 'api/v1/' (django.urls.include)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # TODO: Includi router sotto '/api/v1/'
-    # path('api/v1/', include(router.urls)),
 ]

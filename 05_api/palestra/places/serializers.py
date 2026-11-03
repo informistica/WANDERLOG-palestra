@@ -1,11 +1,13 @@
-"""Serializers per places."""
+"""Serializer dell'API dei luoghi."""
 from rest_framework import serializers
+
 from .models import Place
 
 
 class PlaceSerializer(serializers.ModelSerializer):
-    """TODO: Serializer per Place."""
-    
     class Meta:
         model = Place
-        fields = []  # TODO: ['id', 'name', 'lat', 'lng', 'description', 'board', 'created_at']
+        # TODO (passo 4): id, board, name, description, lat, lng, created_at
+        #   board, id e created_at in sola lettura (la bacheca arriva dall'URL)
+        fields = ['id']
+        read_only_fields = ['id']

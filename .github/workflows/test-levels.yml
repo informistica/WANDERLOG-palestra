@@ -34,6 +34,9 @@ jobs:
           - level: 04_permessi
             control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py::test_initial_migration_exists
             lint: true
+          - level: 05_api
+            control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py
+            lint: true
 
     services:
       postgres:
