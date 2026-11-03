@@ -99,7 +99,7 @@ Questo repository usa le stesse versioni di WANDERLOG:
 - `lint-imports`, dai livelli in cui il contratto è già nello starter
 - i **test di controllo** del livello (quelli dei livelli precedenti, elencati nel README del livello), che lo starter cumulativo deve già superare
 
-Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Un livello entra nella matrice della CI solo quando è pronto (oggi: 01, 02, 03).
+Se uno di questi passi fallisce, il job fallisce: niente errori nascosti. I test dei TODO non girano in CI sullo starter; si verificano in locale (e l'insegnante li verifica con le soluzioni, in un repository separato). Un livello entra nella matrice della CI solo quando è pronto (oggi: 01-04).
 ## Supporto
 
 Per domande o problemi:
