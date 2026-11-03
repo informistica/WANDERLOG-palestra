@@ -1,0 +1,7 @@
+<form id="board-form" method="post" action="{% url 'boards:create' %}"
+      hx-post="{% url 'boards:create' %}" hx-target="#board-list" hx-swap="outerHTML"
+      hx-on::after-request="if (event.detail.successful) this.reset()">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Crea bacheca</button>
+</form>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ board.title }}{% endblock %}
+{% block content %}
+  {% include 'boards/_board_header.html' %}
+  {% if can_edit %}
+    {% include 'boards/_board_edit_form.html' %}
+  {% endif %}
+  <h2>Luoghi</h2>
+  {# TODO (passo 4): avvolgi la lista in un elemento con hx-ext="ws" e              #}
+  {#   ws-connect="/ws/boards/<id>/"; dai a ogni <li> l'id place-<id> e al messaggio #}
+  {#   "Nessun luogo" l'id place-empty; carica core/ext/ws.js nel blocco scripts     #}
+  <ul id="place-list">
+    {% for place in places %}
+      <li>{{ place.name }}</li>
+    {% empty %}
+      <li>Nessun luogo, per ora.</li>
+    {% endfor %}
+  </ul>
+  <p><a href="{% url 'places:board-map' board.pk %}">Vedi sulla mappa</a></p>
+  <p><a href="{% url 'boards:list' %}">Torna alle bacheche</a></p>
+{% endblock %}

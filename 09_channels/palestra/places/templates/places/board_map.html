@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mappa: {{ board.title }}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'places/leaflet/leaflet.css' %}">
+{% endblock %}
+{% block content %}
+  <h1>Mappa: {{ board.title }}</h1>
+  <div id="board-map" data-geojson-url="{{ geojson_url }}" role="region"
+       aria-label="Mappa dei luoghi di {{ board.title }}" style="height: 28rem"></div>
+  <p id="mappa-vuota"{% if has_places %} hidden{% endif %}>Nessun luogo da mostrare sulla mappa.</p>
+  <p><a href="{% url 'boards:detail' board.pk %}">Torna alla bacheca</a></p>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'places/leaflet/leaflet.js' %}" defer></script>
+  <script src="{% static 'places/map.js' %}" defer></script>
+{% endblock %}

@@ -46,6 +46,9 @@ jobs:
           - level: 08_celery
             control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py
             lint: true
+          - level: 09_channels
+            control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py tests/test_celery_app.py tests/test_geocode_task.py
+            lint: true
 
     services:
       postgres:
@@ -78,6 +81,11 @@ jobs:
       DATABASE_URL: postgres://user:password@localhost:5432/palestra_db
       REDIS_URL: redis://localhost:6379/0
       CELERY_BROKER_URL: redis://localhost:6379/0
+      CHANNEL_LAYER_URL: redis://localhost:6379/1
+      EMAIL_HOST: localhost
+      EMAIL_PORT: '1025'
+      DEFAULT_FROM_EMAIL: noreply@palestra.local
+      INBOUND_EMAIL_DOMAIN: palestra.local
 
     defaults:
       run:
@@ -104,6 +112,11 @@ jobs:
           DATABASE_URL=$DATABASE_URL
           REDIS_URL=$REDIS_URL
           CELERY_BROKER_URL=$CELERY_BROKER_URL
+          CHANNEL_LAYER_URL=$CHANNEL_LAYER_URL
+          EMAIL_HOST=$EMAIL_HOST
+          EMAIL_PORT=$EMAIL_PORT
+          DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
+          INBOUND_EMAIL_DOMAIN=$INBOUND_EMAIL_DOMAIN
           EOF
 
       - name: Django check
