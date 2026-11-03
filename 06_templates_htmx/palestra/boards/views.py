@@ -1,65 +1,45 @@
-"""Views per boards con template e HTMX."""
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-from .models import Board
-from .forms import BoardForm
-from .policies import can_view_board, can_edit_board
+"""ViewSet dell'API delle bacheche: /api/v1/boards/."""
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .permissions import BoardPolicy
+from .serializers import BoardSerializer, CollaboratorSerializer
+from .services import add_collaborator, boards_visible_to, create_board
 
 
-@login_required
-def board_list(request):
-    """
-    Lista boards dell'utente.
-    TODO: Filtra boards per owner o collaborator.
-    TODO: Se request.headers.get('HX-Request'), renderizza solo il partial.
-    """
-    boards = Board.objects.all()  # TODO: Filtrare per user
-    
-    # TODO: Implementa logica HX-Request
-    # if request.headers.get('HX-Request'):
-    #     return render(request, 'boards/board_list_partial.html', {'boards': boards})
-    
-    return render(request, 'boards/board_list.html', {'boards': boards})
+class BoardViewSet(viewsets.ModelViewSet):
+    """Chi non può vedere una bacheca riceve 404; chi la vede ma non può modificarla, 403."""
+    serializer_class = BoardSerializer
+    permission_classes = [IsAuthenticated, BoardPolicy]
 
+    def get_queryset(self):
+        return boards_visible_to(self.request.user).select_related('owner')
 
-@login_required
-def board_create(request):
-    """
-    Crea una nuova board.
-    TODO: Se POST con errori e HX-Request, renderizza solo form partial con errori.
-    """
-    if request.method == 'POST':
-        form = BoardForm(request.POST)
-        if form.is_valid():
-            board = form.save(commit=False)
-            board.owner = request.user
-            board.save()
-            # TODO: Con HTMX, ritorna partial invece di redirect
-            return redirect('board_list')
-        else:
-            # TODO: Se HX-Request, renderizza partial del form con errori
-            pass
-    else:
-        form = BoardForm()
-    
-    return render(request, 'boards/board_form.html', {'form': form})
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        try:
+            serializer.instance = create_board(self.request.user, data.get('title'),
+                                               data.get('description', ''))
+        except ValueError as exc:
+            raise ValidationError({'title': [str(exc)]})
 
-
-@login_required
-def board_delete(request, pk):
-    """
-    Cancella board.
-    TODO: Controlla permessi con can_edit_board (riusa da policies.py livello 04).
-    """
-    board = get_object_or_404(Board, pk=pk)
-    
-    # TODO: Aggiungi controllo permessi
-    # if not can_edit_board(request.user, board):
-    #     return HttpResponseForbidden("Non hai i permessi")
-    
-    if request.method == 'POST':
-        board.delete()
-        return redirect('board_list')
-    
-    return render(request, 'boards/board_confirm_delete.html', {'board': board})
+    # Il permesso lo decide il servizio (policy can_add_collaborator), non BoardPolicy
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def collaborators(self, request, pk=None):
+        board = self.get_object()
+        serializer = CollaboratorSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        try:
+            collaborator = add_collaborator(board, data['user'],
+                                            data.get('role', 'viewer'),
+                                            requesting_user=request.user)
+        except PermissionError as exc:
+            raise PermissionDenied(str(exc))
+        except ValueError as exc:
+            raise ValidationError({'user': [str(exc)]})
+        return Response(CollaboratorSerializer(collaborator).data,
+                        status=status.HTTP_201_CREATED)

@@ -37,6 +37,9 @@ jobs:
           - level: 05_api
             control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py
             lint: true
+          - level: 06_templates_htmx
+            control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py
+            lint: true
 
     services:
       postgres:

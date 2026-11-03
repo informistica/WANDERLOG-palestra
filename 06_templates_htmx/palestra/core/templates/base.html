@@ -1,0 +1,26 @@
+{% load static %}<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Palestra WANDERLOG{% endblock %}</title>
+  {# TODO (passo 3): carica HTMX dal file statico versionato core/htmx.min.js ({% static %}, defer) #}
+</head>
+{# TODO (passo 3): sul <body> metti hx-headers con il token CSRF nell'header X-CSRFToken #}
+<body>
+  <header>
+    <a href="{% url 'boards:list' %}">Le mie bacheche</a>
+    {% if user.is_authenticated %}
+      <span>{{ user.email }}</span>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Esci</button>
+      </form>
+    {% endif %}
+  </header>
+  {# TODO (passo 3): regione per gli annunci: <div id="annunci" aria-live="polite"></div> #}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

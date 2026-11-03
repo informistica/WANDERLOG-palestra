@@ -5,18 +5,16 @@ from core.models import BaseModel
 
 class Place(BaseModel):
     """Luogo preferito in una bacheca."""
-    # TODO: Aggiungi campo name
-    # name = models.CharField(...)
-    
-    # TODO: Aggiungi coordinate geografiche lat e lng
-    # lat = models.FloatField(...)
-    # lng = models.FloatField(...)
-    
-    # TODO: Aggiungi campo description (opzionale)
-    # description = models.TextField(...)
-    
-    # TODO: Aggiungi FK board verso 'boards.Board' con related_name='places'
-    # board = models.ForeignKey(...)
+    name = models.CharField(max_length=255, verbose_name='Nome')
+    lat = models.FloatField(verbose_name='Latitudine')
+    lng = models.FloatField(verbose_name='Longitudine')
+    description = models.TextField(blank=True, verbose_name='Descrizione')
+    board = models.ForeignKey(
+        'boards.Board',
+        on_delete=models.CASCADE,
+        related_name='places',
+        verbose_name='Bacheca'
+    )
 
     def __str__(self):
         return self.name
@@ -24,3 +22,4 @@ class Place(BaseModel):
     class Meta:
         verbose_name = 'Luogo'
         verbose_name_plural = 'Luoghi'
+        ordering = ['created_at']

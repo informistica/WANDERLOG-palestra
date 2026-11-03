@@ -1,50 +1,22 @@
-"""Policy per il controllo accessi alle board."""
+"""Policy di accesso alle bacheche: funzioni pure, restituiscono True/False."""
+
+
+def _is_authenticated(user):
+    return user is not None and getattr(user, 'is_authenticated', False)
 
 
 def can_view_board(user, board):
-    """
-    TODO: Implementa il controllo se un utente può visualizzare una board.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True se l'utente è owner o collaborator
-    """
-    # TODO: Ritorna True se:
-    # - user è il proprietario (board.owner == user)
-    # - oppure user è un collaborator (esiste un Collaborator con board=board e user=user)
-    # Usa board.collaborators.filter(user=user).exists() per il secondo check
-    pass
+    """Proprietario o collaboratore."""
+    if not _is_authenticated(user):
+        return False
+    return board.owner_id == user.pk or board.collaborators.filter(user=user).exists()
 
 
 def can_edit_board(user, board):
-    """
-    TODO: Implementa il controllo se un utente può modificare una board.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True solo se l'utente è owner
-    """
-    # TODO: Ritorna True solo se user è il proprietario
-    pass
+    """Solo il proprietario."""
+    return _is_authenticated(user) and board.owner_id == user.pk
 
 
 def can_add_collaborator(user, board):
-    """
-    TODO: Implementa il controllo se un utente può aggiungere collaboratori.
-    
-    Args:
-        user: L'utente da verificare
-        board: La board da verificare
-    
-    Returns:
-        bool: True solo se l'utente è owner
-    """
-    # TODO: Ritorna True solo se user è il proprietario
-    # (stessa logica di can_edit_board)
-    pass
+    """Solo il proprietario."""
+    return can_edit_board(user, board)

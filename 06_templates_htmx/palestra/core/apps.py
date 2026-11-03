@@ -1,4 +1,3 @@
-"""Configurazione dell'app core."""
 from django.apps import AppConfig
 
 

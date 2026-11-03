@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ board.title }}{% endblock %}
+{% block content %}
+  {% include 'boards/_board_header.html' %}
+  {% if can_edit %}
+    {% include 'boards/_board_edit_form.html' %}
+  {% endif %}
+  <h2>Luoghi</h2>
+  <ul id="place-list">
+    {% for place in places %}
+      <li>{{ place.name }}</li>
+    {% empty %}
+      <li>Nessun luogo, per ora.</li>
+    {% endfor %}
+  </ul>
+  <p><a href="{% url 'boards:list' %}">Torna alle bacheche</a></p>
+{% endblock %}

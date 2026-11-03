@@ -1,0 +1,13 @@
+[importlinter]
+root_packages =
+    core
+    boards
+    places
+
+[importlinter:contract:layers]
+name = Livelli delle app (places -> boards -> core)
+type = layers
+layers =
+    places
+    boards
+    core

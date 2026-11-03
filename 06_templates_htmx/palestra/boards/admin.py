@@ -6,15 +6,20 @@ from .models import User, Board, Collaborator
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
+    """Admin personalizzato per User senza username."""
     list_display = ('email', 'name', 'language', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'language')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Informazioni', {'fields': ('name', 'language')}),
-        ('Permessi', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Informazioni personali', {'fields': ('name', 'language')}),
+        ('Permessi', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Date importanti', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
-        (None, {'fields': ('email', 'name', 'password1', 'password2')}),
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'name', 'password1', 'password2'),
+        }),
     )
     search_fields = ('email', 'name')
     ordering = ('email',)
@@ -22,9 +27,17 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(Board)
 class BoardAdmin(admin.ModelAdmin):
+    """Admin per Board."""
     list_display = ('title', 'owner', 'created_at')
     list_filter = ('created_at',)
-    search_fields = ('title', 'owner__email')
+    search_fields = ('title', 'description', 'owner__email')
+    readonly_fields = ('id', 'created_at', 'updated_at')
 
 
-# TODO: Registra Collaborator con admin.site.register
+@admin.register(Collaborator)
+class CollaboratorAdmin(admin.ModelAdmin):
+    """Admin per Collaborator."""
+    list_display = ('user', 'board', 'role', 'created_at')
+    list_filter = ('role',)
+    search_fields = ('user__email', 'board__title')
+    readonly_fields = ('id', 'created_at', 'updated_at')

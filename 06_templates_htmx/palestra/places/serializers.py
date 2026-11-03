@@ -1,11 +1,11 @@
-"""Serializers per places."""
+"""Serializer dell'API dei luoghi."""
 from rest_framework import serializers
+
 from .models import Place
 
 
 class PlaceSerializer(serializers.ModelSerializer):
-    """TODO: Serializer per Place."""
-    
     class Meta:
         model = Place
-        fields = []  # TODO: ['id', 'name', 'lat', 'lng', 'description', 'board', 'created_at']
+        fields = ['id', 'board', 'name', 'description', 'lat', 'lng', 'created_at']
+        read_only_fields = ['id', 'board', 'created_at']
