@@ -52,6 +52,9 @@ jobs:
           - level: 10_email
             control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py tests/test_celery_app.py tests/test_geocode_task.py tests/test_realtime.py
             lint: true
+          - level: 11_testing
+            control: tests/test_environment.py tests/test_docker_config.py tests/test_models.py tests/test_admin.py tests/test_services.py tests/test_architecture.py tests/test_migrations.py tests/test_permissions.py tests/test_policies_edge.py tests/test_api.py tests/test_api_places.py tests/test_htmx_base.py tests/test_board_pages.py tests/test_map_geojson.py tests/test_map_page.py tests/test_celery_app.py tests/test_geocode_task.py tests/test_realtime.py tests/test_inbox.py
+            lint: true
 
     services:
       postgres:

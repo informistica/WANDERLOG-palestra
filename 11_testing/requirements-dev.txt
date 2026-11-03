@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest>=8
+pytest-django>=4.9
+PyYAML>=6.0
+import-linter>=2.0
+# TODO (passo 1): aggiungi factory-boy e pytest-cov
