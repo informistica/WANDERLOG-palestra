@@ -16,7 +16,7 @@ class BoardConsumer(AsyncWebsocketConsumer):
         # TODO (passo 3): prendi board_pk da self.scope['url_route']['kwargs'];
         #   se la bacheca non e' visibile chiudi con codice FORBIDDEN;
         #   altrimenti entra nel gruppo della bacheca e accetta
-        raise NotImplementedError
+        raise NotImplementedError('TODO passo 3: BoardConsumer.connect')
 
     async def disconnect(self, code):
         # TODO (passo 3): esci dal gruppo (se ci eri entrato)
@@ -28,9 +28,9 @@ class BoardConsumer(AsyncWebsocketConsumer):
     async def board_event(self, event):
         # TODO (passo 3): ricontrolla la visibilita' (chiudi con FORBIDDEN se non c'e' piu'),
         #   poi manda al browser boards/_place_oob.html con event['payload']['place']
-        raise NotImplementedError
+        raise NotImplementedError('TODO passo 3: BoardConsumer.board_event')
 
     @database_sync_to_async
     def board_visible(self):
         # TODO (passo 3): la bacheca esiste ed e' visibile a self.scope['user'] (can_view_board)
-        raise NotImplementedError
+        raise NotImplementedError('TODO passo 3: BoardConsumer.board_visible')
